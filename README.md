@@ -1,6 +1,6 @@
 # 买房助手
 
-![demo1](./public/demo1.png)
+![demo1](./public/demo1.jpg)
 
 ## 项目介绍
 
