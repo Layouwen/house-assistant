@@ -6,48 +6,125 @@ window._AMapSecurityConfig = {
   securityJsCode: import.meta.env.VITE_SECURITY_JS_CODE,
 };
 
-const 越秀天瀛 = {
-  name: "越秀天瀛",
-  center: [113.203718, 23.051949],
-};
+function calcLine(
+  起始点: any,
+  地铁: any,
+  目的地: any,
+  { walking, riding, subwayTransfer, transfer }: any
+) {
+  walking.search(起始点.center, 地铁.center, (status: any, result: any) => {
+    console.log("layouwen walking result", result);
+  });
+
+  riding.search(起始点.center, 地铁.center, (status: any, result: any) => {
+    console.log("layouwen riding result", result);
+  });
+
+  subwayTransfer.search(
+    地铁.center,
+    目的地.center,
+    (status: any, result: any) => {
+      console.log("layouwen subwayTransfer result", result);
+    }
+  );
+
+  transfer.search(起始点.center, 目的地.center, (status: any, result: any) => {
+    console.log("layouwen transfer result", result);
+  });
+}
+
 const 南塘 = {
   name: "南塘",
   center: [113.216471, 23.100384],
 };
+
 const 东方国际广场 = {
   name: "东方国际广场",
   center: [113.287755, 23.135538],
 };
-const 新世界天馥 = {
-  name: "新世界天馥",
-  center: [113.210261, 23.111539],
+
+const 滘口地铁 = {
+  name: "滘口地铁",
+  center: [113.20844, 23.113796],
+};
+const 西朗地铁 = {
+  name: "西朗地铁",
+  center: [113.232521, 23.066789],
 };
 const 花地湾地铁 = {
   name: "花地湾地铁",
   center: [113.23403, 23.087055],
 };
+
+const 新世界天馥 = {
+  name: "新世界天馥",
+  center: [113.210261, 23.111539],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 新世界天馥;
+    const 地铁 = 滘口地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
 const 诚汇新都 = {
   name: "诚汇新都榕诚湾",
   center: [113.222039, 23.08719],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 诚汇新都;
+    const 地铁 = 花地湾地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
 };
+
+const 越秀天瀛 = {
+  name: "越秀天瀛",
+  center: [113.203718, 23.051949],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 越秀天瀛;
+    const 地铁 = 西朗地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
 const 中海花湾壹号 = {
   name: "中海花湾壹号",
   center: [113.238532, 23.068602],
 };
+
 const 保利雅郡 = {
   name: "保利雅郡",
   center: [113.239793, 23.071507],
 };
 
 const pois = [
-  越秀天瀛,
+  西朗地铁,
+  滘口地铁,
+  花地湾地铁,
   南塘,
   东方国际广场,
   新世界天馥,
-  花地湾地铁,
   诚汇新都,
-  中海花湾壹号,
+  越秀天瀛,
   保利雅郡,
+  中海花湾壹号,
 ];
 
 function App() {
@@ -146,37 +223,12 @@ function App() {
               panel: "map-transfer",
             });
 
-            walking.search(
-              诚汇新都.center,
-              花地湾地铁.center,
-              (status: any, result: any) => {
-                console.log("result", result);
-              }
-            );
-            riding.search(
-              诚汇新都.center,
-              花地湾地铁.center,
-              (status: any, result: any) => {
-                console.log("result", result);
-              }
-            );
+            // 诚汇新都.run({ walking, riding, subwayTransfer, transfer });
+            // 新世界天馥.run({ walking, riding, subwayTransfer, transfer });
+            越秀天瀛.run({ walking, riding, subwayTransfer, transfer });
 
-            subwayTransfer.search(
-              花地湾地铁.center,
-              东方国际广场.center,
-              (status: any, result: any) => {
-                console.log("result", result);
-              }
-            );
-
-            transfer.search(
-              诚汇新都.center,
-              东方国际广场.center,
-              (status: any, result: any) => {
-                console.log("result", result);
-              }
-            );
             return;
+
             const placeSearch = new AMap.PlaceSearch({
               pageSize: 20, //单页显示结果条数
               pageIndex: 1, //页码
@@ -186,8 +238,12 @@ function App() {
               panel: "my-panel", //参数值为你页面定义容器的 id 值<div id="my-panel"></div>，结果列表将在此容器中进行展示。
               // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
             });
-            placeSearch.search("花地湾", (status: any, result: any) => {
-              console.log("result", result.poiList, result.poiList.pois);
+            placeSearch.search("西朗", (status: any, result: any) => {
+              console.log(
+                "layouwen place search result",
+                result.poiList,
+                result.poiList.pois
+              );
             }); //使用插件搜索关键字并查看结果
           }
         );
@@ -206,7 +262,7 @@ function App() {
         });
         map.add(polyline);
         const layers = map.getLayers();
-        console.log("layers", layers);
+        console.log("layouwen layers", layers);
 
         // map.setFeatures(["bg", "point", "road", "building"]);
       })
