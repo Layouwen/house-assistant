@@ -12,21 +12,23 @@ function calcLine(
   目的地: any,
   { walking, riding, subwayTransfer, transfer }: any
 ) {
-  walking.search(起始点.center, 地铁.center, (status: any, result: any) => {
-    console.log("layouwen walking result", result);
-  });
+  if (地铁) {
+    walking.search(起始点.center, 地铁.center, (status: any, result: any) => {
+      console.log("layouwen walking result", result);
+    });
 
-  riding.search(起始点.center, 地铁.center, (status: any, result: any) => {
-    console.log("layouwen riding result", result);
-  });
+    riding.search(起始点.center, 地铁.center, (status: any, result: any) => {
+      console.log("layouwen riding result", result);
+    });
 
-  subwayTransfer.search(
-    地铁.center,
-    目的地.center,
-    (status: any, result: any) => {
-      console.log("layouwen subwayTransfer result", result);
-    }
-  );
+    subwayTransfer.search(
+      地铁.center,
+      目的地.center,
+      (status: any, result: any) => {
+        console.log("layouwen subwayTransfer result", result);
+      }
+    );
+  }
 
   transfer.search(起始点.center, 目的地.center, (status: any, result: any) => {
     console.log("layouwen transfer result", result);
@@ -61,10 +63,10 @@ const 广州市荔湾区花地中学 = {
   name: "广州市荔湾区花地中学",
   center: [113.232985, 23.097188],
 };
-const 广东实验中学荔湾学校广钢新城校区 = {
-  name: "广东实验中学荔湾学校广钢新城校区",
-  center: [],
-};
+// const 广东实验中学荔湾学校广钢新城校区 = {
+//   name: "广东实验中学荔湾学校广钢新城校区",
+//   center: [],
+// };
 const 广东实验中学荔湾学校花地湾校区 = {
   name: "广东实验中学荔湾学校花地湾校区",
   center: [113.233145, 23.084221],
@@ -96,6 +98,14 @@ const 花地湾地铁 = {
   name: "花地湾地铁",
   center: [113.23403, 23.087055],
 };
+const 鹤洞地铁 = {
+  name: "鹤洞地铁",
+  center: [113.240153, 23.072495],
+};
+const 坑口地铁 = {
+  name: "坑口地铁",
+  center: [113.232498, 23.078878],
+};
 
 const 新世界天馥 = {
   name: "新世界天馥",
@@ -108,7 +118,7 @@ const 新世界天馥 = {
     广州市第九十三中学,
     中国教育科学研究院荔湾实验学校,
     广州市荔湾区花地中学,
-    广东实验中学荔湾学校广钢新城校区,
+    // 广东实验中学荔湾学校广钢新城校区,
     广东实验中学荔湾学校花地湾校区,
     广东广雅中学初中部,
   ],
@@ -141,6 +151,22 @@ const 诚汇新都 = {
   },
 };
 
+const 广钢花城 = {
+  name: "广钢花城",
+  center: [113.253051, 23.054807],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 广钢花城;
+    const 地铁 = 鹤洞地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
 const 越秀天瀛 = {
   name: "越秀天瀛",
   center: [113.203718, 23.051949],
@@ -157,9 +183,56 @@ const 越秀天瀛 = {
   },
 };
 
-const 中海花湾壹号 = {
-  name: "中海花湾壹号",
-  center: [113.238532, 23.068602],
+const 保利锦上印 = {
+  name: "保利锦上印",
+  center: [113.224448, 23.080103],
+  vrRoom:
+    "https://www.anjuke.com/panorama?params=%7B%22city_id%22%3A12%2C%22loupan_id%22%3A518863%2C%22housetype_id%22%3A802498%2C%22pano_id%22%3A106031376%2C%22seeHouseBtn%22%3A1%2C%22pc_type%22%3A%22in_pc%22%2C%22page_source%22%3A%22VR%5Cu9875%22%7D&type=1&mode=0",
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 保利锦上印;
+    const 地铁 = 坑口地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
+const 万科理想花地朗庭 = {
+  name: "万科理想花地朗庭",
+  center: [113.228471, 23.086165],
+  vrRoom:
+    "https://www.anjuke.com/panorama?params=%7B%22city_id%22%3A12%2C%22loupan_id%22%3A520681%2C%22housetype_id%22%3A813474%2C%22pano_id%22%3A999900000886%2C%22seeHouseBtn%22%3A1%2C%22pc_type%22%3A%22in_pc%22%2C%22page_source%22%3A%22VR%5Cu9875%22%7D&type=1&mode=0",
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 万科理想花地朗庭;
+    const 地铁 = 花地湾地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
+const 中海浣花里 = {
+  name: "中海浣花里",
+  center: [113.232172,23.082296],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 中海浣花里;
+    const 地铁 = 坑口地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
 };
 
 const 保利雅郡 = {
@@ -174,10 +247,13 @@ const pois = [
   南塘,
   东方国际广场,
   新世界天馥,
+  保利锦上印,
   诚汇新都,
+  广钢花城,
   越秀天瀛,
   保利雅郡,
-  中海花湾壹号,
+  中海浣花里,
+  万科理想花地朗庭,
 ];
 
 function App() {
@@ -191,6 +267,7 @@ function App() {
       .then((AMap: any) => {
         const map = new AMap.Map("map", {
           mapStyle: "amap://styles/26cf7e5fe26024097cc49d172d10c23f",
+          // viewMode: "3D", //地图模式
           zoom: 15,
           center: 越秀天瀛.center,
         });
@@ -289,7 +366,11 @@ function App() {
 
             // 诚汇新都.run({ walking, riding, subwayTransfer, transfer });
             // 新世界天馥.run({ walking, riding, subwayTransfer, transfer });
-            越秀天瀛.run({ walking, riding, subwayTransfer, transfer });
+            // 越秀天瀛.run({ walking, riding, subwayTransfer, transfer });
+            // 广钢花城.run({ walking, riding, subwayTransfer, transfer });
+            // 保利锦上印.run({ walking, riding, subwayTransfer, transfer });
+            // 万科理想花地朗庭.run({ walking, riding, subwayTransfer, transfer });
+            中海浣花里.run({ walking, riding, subwayTransfer, transfer });
 
             return;
 
@@ -302,11 +383,16 @@ function App() {
               panel: "my-panel", //参数值为你页面定义容器的 id 值<div id="my-panel"></div>，结果列表将在此容器中进行展示。
               // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
             });
-            placeSearch.search("西朗", (status: any, result: any) => {
+            placeSearch.search("保利雅郡", (status: any, result: any) => {
+              console.log("layouwen place search status", status);
+              if (status === "error") {
+                console.log("layouwen place search error", result);
+                return;
+              }
               console.log(
                 "layouwen place search result",
                 result.poiList,
-                result.poiList.pois
+                result.poiList?.pois
               );
             }); //使用插件搜索关键字并查看结果
           }
@@ -328,7 +414,7 @@ function App() {
         const layers = map.getLayers();
         console.log("layouwen layers", layers);
 
-        // map.setFeatures(["bg", "point", "road", "building"]);
+        map.setFeatures(["bg", "point", "road", "building"]);
       })
       .catch((e) => {
         console.error(e, "error"); //加载错误提示
