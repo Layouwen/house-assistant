@@ -33,6 +33,47 @@ function calcLine(
   });
 }
 
+const 广州市真光中学初中部本部校区 = {
+  name: "广州市真光中学初中部本部校区",
+  center: [113.245134, 23.077277],
+};
+const 广州市真光中学初中部实验校区 = {
+  name: "广州市真光中学初中部实验校区",
+  center: [113.247294, 23.078784],
+};
+const 广州市第四中学初中逸园校区 = {
+  name: "广州市第四中学初中逸园校区",
+  center: [113.206299, 23.109685],
+};
+const 广州市西关外国语学校校本部 = {
+  name: "广州市西关外国语学校校本部",
+  center: [113.236228, 23.128506],
+};
+const 广州市第九十三中学 = {
+  name: "广州市第九十三中学",
+  center: [113.214663, 23.106788],
+};
+const 中国教育科学研究院荔湾实验学校 = {
+  name: "中国教育科学研究院荔湾实验学校",
+  center: [113.215577, 23.077787],
+};
+const 广州市荔湾区花地中学 = {
+  name: "广州市荔湾区花地中学",
+  center: [113.232985, 23.097188],
+};
+const 广东实验中学荔湾学校广钢新城校区 = {
+  name: "广东实验中学荔湾学校广钢新城校区",
+  center: [],
+};
+const 广东实验中学荔湾学校花地湾校区 = {
+  name: "广东实验中学荔湾学校花地湾校区",
+  center: [113.233145, 23.084221],
+};
+const 广东广雅中学初中部 = {
+  name: "广东广雅中学初中部",
+  center: [113.240889, 23.138589],
+};
+
 const 南塘 = {
   name: "南塘",
   center: [113.216471, 23.100384],
@@ -59,6 +100,18 @@ const 花地湾地铁 = {
 const 新世界天馥 = {
   name: "新世界天馥",
   center: [113.210261, 23.111539],
+  schools: [
+    广州市真光中学初中部本部校区,
+    广州市真光中学初中部实验校区,
+    广州市第四中学初中逸园校区,
+    广州市西关外国语学校校本部,
+    广州市第九十三中学,
+    中国教育科学研究院荔湾实验学校,
+    广州市荔湾区花地中学,
+    广东实验中学荔湾学校广钢新城校区,
+    广东实验中学荔湾学校花地湾校区,
+    广东广雅中学初中部,
+  ],
   run: ({ walking, riding, subwayTransfer, transfer }: any) => {
     const 起始点 = 新世界天馥;
     const 地铁 = 滘口地铁;
@@ -161,6 +214,17 @@ function App() {
             offset: new AMap.Pixel(-13, -30),
           });
           map.add(marker);
+
+          if (poi.schools) {
+            for (const school of poi.schools) {
+              const schoolMarker = new AMap.Marker({
+                position: school.center,
+                content: `<div class="custom-content-marker"><div class="poi-school-icon"></div><div class="poi-school">${school.name}</div></div>`,
+                offset: new AMap.Pixel(-13, -30),
+              });
+              map.add(schoolMarker);
+            }
+          }
         });
 
         AMap.plugin(
