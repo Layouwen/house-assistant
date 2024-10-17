@@ -20,7 +20,7 @@ async function calcLine(
 ) {
   if (地铁) {
     await walkingSearch(walking, { start: 起始点.center, end: 地铁.center });
-    await ridingSearch(riding, { start: 地铁.center, end: 目的地.center });
+    await ridingSearch(riding, { start: 起始点.center, end: 地铁.center });
     await subwayTransferSearch(subwayTransfer, {
       start: 地铁.center,
       end: 目的地.center,
@@ -217,6 +217,22 @@ const 万科理想花地朗庭 = {
   },
 };
 
+const 保利和颂 = {
+  name: "保利和颂",
+  center: [113.228667,23.082651],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 保利和颂;
+    const 地铁 = 坑口地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
+};
+
 const 中海浣花里 = {
   name: "中海浣花里",
   center: [113.232172, 23.082296],
@@ -368,7 +384,8 @@ function App() {
             // 广钢花城.run({ walking, riding, subwayTransfer, transfer });
             // 保利锦上印.run({ walking, riding, subwayTransfer, transfer });
             // 万科理想花地朗庭.run({ walking, riding, subwayTransfer, transfer });
-            中海浣花里.run({ walking, riding, subwayTransfer, transfer });
+            // 中海浣花里.run({ walking, riding, subwayTransfer, transfer });
+            // 保利和颂.run({ walking, riding, subwayTransfer, transfer });
 
             return;
 
