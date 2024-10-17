@@ -16,20 +16,25 @@ async function calcLine(
   起始点: any,
   地铁: any,
   目的地: any,
-  { walking, riding, subwayTransfer, transfer }: any
+  { walking, riding, subwayTransfer, transfer, transferCenter }: any
 ) {
-  if (地铁) {
-    await walkingSearch(walking, { start: 起始点.center, end: 地铁.center });
-    await ridingSearch(riding, { start: 起始点.center, end: 地铁.center });
-    await subwayTransferSearch(subwayTransfer, {
-      start: 地铁.center,
-      end: 目的地.center,
-    });
-  }
+  // if (地铁) {
+  //   await walkingSearch(walking, { start: 起始点.center, end: 地铁.center });
+  //   await ridingSearch(riding, { start: 起始点.center, end: 地铁.center });
+  //   await subwayTransferSearch(subwayTransfer, {
+  //     start: 地铁.center,
+  //     end: 目的地.center,
+  //   });
+  // }
 
-  await transferSearch(transfer, {
+  // await transferSearch(transfer, {
+  //   start: 起始点.center,
+  //   end: 目的地.center,
+  // });
+
+  await transferSearch(transferCenter, {
     start: 起始点.center,
-    end: 目的地.center,
+    end: 芳村地铁.center,
   });
 }
 
@@ -124,7 +129,7 @@ const 新世界天馥 = {
     广东实验中学荔湾学校花地湾校区,
     广东广雅中学初中部,
   ],
-  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+  run: ({ walking, riding, subwayTransfer, transfer, transferCenter }: any) => {
     const 起始点 = 新世界天馥;
     const 地铁 = 滘口地铁;
     const 目的地 = 东方国际广场;
@@ -133,6 +138,7 @@ const 新世界天馥 = {
       riding,
       subwayTransfer,
       transfer,
+      transferCenter,
     });
   },
 };
@@ -140,7 +146,7 @@ const 新世界天馥 = {
 const 诚汇新都 = {
   name: "诚汇新都榕诚湾",
   center: [113.222039, 23.08719],
-  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+  run: ({ walking, riding, subwayTransfer, transfer, transferCenter }: any) => {
     const 起始点 = 诚汇新都;
     const 地铁 = 花地湾地铁;
     const 目的地 = 东方国际广场;
@@ -149,6 +155,7 @@ const 诚汇新都 = {
       riding,
       subwayTransfer,
       transfer,
+      transferCenter,
     });
   },
 };
@@ -274,7 +281,7 @@ const 花语和岸 = {
 const 保利雅郡 = {
   name: "保利雅郡",
   center: [113.239793, 23.071507],
-  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+  run: ({ walking, riding, subwayTransfer, transfer, transferCenter }: any) => {
     const 起始点 = 保利雅郡;
     const 地铁 = 鹤洞地铁;
     const 目的地 = 东方国际广场;
@@ -283,6 +290,7 @@ const 保利雅郡 = {
       riding,
       subwayTransfer,
       transfer,
+      transferCenter,
     });
   },
 };
@@ -418,8 +426,16 @@ function App() {
               panel: "map-transfer",
             });
 
-            // 诚汇新都.run({ walking, riding, subwayTransfer, transfer });
-            // 新世界天馥.run({ walking, riding, subwayTransfer, transfer });
+            const transferCenter = new AMap.Transfer({
+              city: "020",
+              policy: "LEAST_TIME",
+              // policy: "MOST_COMFORT",
+              map: map,
+              panel: "map-transfer-center",
+            });
+
+            // 诚汇新都.run({ walking, riding, subwayTransfer, transfer, transferCenter });
+            新世界天馥.run({ walking, riding, subwayTransfer, transfer, transferCenter });
             // 越秀天瀛.run({ walking, riding, subwayTransfer, transfer });
             // 广钢花城.run({ walking, riding, subwayTransfer, transfer });
             // 保利锦上印.run({ walking, riding, subwayTransfer, transfer });
@@ -440,7 +456,7 @@ function App() {
               panel: "my-panel", //参数值为你页面定义容器的 id 值<div id="my-panel"></div>，结果列表将在此容器中进行展示。
               // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
             });
-            placeSearch.search("芳村地铁", (status: any, result: any) => {
+            placeSearch.search("白鹅潭万象城", (status: any, result: any) => {
               console.log("layouwen place search status", status);
               if (status === "error") {
                 console.log("layouwen place search error", result);
@@ -485,6 +501,7 @@ function App() {
       <div id="map-riding"></div>
       <div id="map-subway-transfer"></div>
       <div id="map-transfer"></div>
+      <div id="map-transfer-center"></div>
       <div id="my-panel"></div>
     </div>
   );
