@@ -220,6 +220,7 @@ const 万科理想花地朗庭 = {
 const 保利和颂 = {
   name: "保利和颂",
   center: [113.228667,23.082651],
+  vrRoom: 'https://www.anjuke.com/panorama/ybj?params={"city_id"%3A12%2C"loupan_id"%3A523872%2C"housetype_id"%3A826274%2C"pano_id"%3A111714820%2C"seeHouseBtn"%3A0%2C"panoSource"%3A"virtualModel"%2C"pc_type"%3A"in_pc"%2C"page_source"%3A"VR\u9875"}&type=1&mode=0',
   run: ({ walking, riding, subwayTransfer, transfer }: any) => {
     const 起始点 = 保利和颂;
     const 地铁 = 坑口地铁;
