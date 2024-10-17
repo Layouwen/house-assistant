@@ -104,6 +104,10 @@ const 坑口地铁 = {
   name: "坑口地铁",
   center: [113.232498, 23.078878],
 };
+const 芳村地铁 = {
+  name: "芳村地铁",
+  center: [113.23587, 23.09857],
+};
 
 const 新世界天馥 = {
   name: "新世界天馥",
@@ -250,22 +254,57 @@ const 中海浣花里 = {
   },
 };
 
+const 花语和岸 = {
+  name: "花语和岸",
+  center: [113.228255,23.09862],
+  vrRoom: 'https://www.anjuke.com/panorama?params={"city_id"%3A12%2C"loupan_id"%3A522808%2C"housetype_id"%3A818792%2C"pano_id"%3A111719195%2C"seeHouseBtn"%3A0%2C"pc_type"%3A"in_pc"%2C"page_source"%3A"VR\u9875"}&type=1&mode=0&from=pc_lpxc_view',
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 花语和岸;
+    const 地铁 = 芳村地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  }
+};
+
 const 保利雅郡 = {
   name: "保利雅郡",
   center: [113.239793, 23.071507],
+  run: ({ walking, riding, subwayTransfer, transfer }: any) => {
+    const 起始点 = 保利雅郡;
+    const 地铁 = 鹤洞地铁;
+    const 目的地 = 东方国际广场;
+    calcLine(起始点, 地铁, 目的地, {
+      walking,
+      riding,
+      subwayTransfer,
+      transfer,
+    });
+  },
 };
 
 const pois = [
   西朗地铁,
   滘口地铁,
   花地湾地铁,
+  鹤洞地铁,
+  坑口地铁,
+  芳村地铁,
+
   南塘,
   东方国际广场,
+
   新世界天馥,
   保利锦上印,
   诚汇新都,
   广钢花城,
   越秀天瀛,
+  保利和颂,
+  花语和岸,
   保利雅郡,
   中海浣花里,
   万科理想花地朗庭,
@@ -387,6 +426,8 @@ function App() {
             // 万科理想花地朗庭.run({ walking, riding, subwayTransfer, transfer });
             // 中海浣花里.run({ walking, riding, subwayTransfer, transfer });
             // 保利和颂.run({ walking, riding, subwayTransfer, transfer });
+            // 花语和岸.run({ walking, riding, subwayTransfer, transfer });
+            // 保利雅郡.run({ walking, riding, subwayTransfer, transfer });
 
             return;
 
@@ -399,7 +440,7 @@ function App() {
               panel: "my-panel", //参数值为你页面定义容器的 id 值<div id="my-panel"></div>，结果列表将在此容器中进行展示。
               // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
             });
-            placeSearch.search("保利雅郡", (status: any, result: any) => {
+            placeSearch.search("芳村地铁", (status: any, result: any) => {
               console.log("layouwen place search status", status);
               if (status === "error") {
                 console.log("layouwen place search error", result);
@@ -414,25 +455,26 @@ function App() {
           }
         );
 
-        const lineArr = [
-          [116.368904, 39.913423],
-          [116.382122, 39.901176],
-          [116.387271, 39.912501],
-          [116.398258, 39.9046],
-        ];
-        const polyline = new AMap.Polyline({
-          path: lineArr, //设置线覆盖物路径
-          strokeColor: "#3366FF", //线颜色
-          strokeWeight: 5, //线宽
-          strokeStyle: "solid", //线样式
-        });
-        map.add(polyline);
+        // const lineArr = [
+        //   [116.368904, 39.913423],
+        //   [116.382122, 39.901176],
+        //   [116.387271, 39.912501],
+        //   [116.398258, 39.9046],
+        // ];
+        // const polyline = new AMap.Polyline({
+        //   path: lineArr, //设置线覆盖物路径
+        //   strokeColor: "#3366FF", //线颜色
+        //   strokeWeight: 5, //线宽
+        //   strokeStyle: "solid", //线样式
+        // });
+        // map.add(polyline);
+
         const layers = map.getLayers();
         console.log("layouwen layers", layers);
 
         map.setFeatures(["bg", "point", "road", "building"]);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.error(e, "error"); //加载错误提示
       });
   }, []);
