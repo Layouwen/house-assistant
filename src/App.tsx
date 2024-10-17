@@ -1,4 +1,10 @@
 import { useEffect } from "react";
+import {
+  subwayTransferSearch,
+  ridingSearch,
+  walkingSearch,
+  transferSearch,
+} from "./utils";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -6,32 +12,24 @@ window._AMapSecurityConfig = {
   securityJsCode: import.meta.env.VITE_SECURITY_JS_CODE,
 };
 
-function calcLine(
+async function calcLine(
   起始点: any,
   地铁: any,
   目的地: any,
   { walking, riding, subwayTransfer, transfer }: any
 ) {
   if (地铁) {
-    walking.search(起始点.center, 地铁.center, (status: any, result: any) => {
-      console.log("layouwen walking result", result);
+    await walkingSearch(walking, { start: 起始点.center, end: 地铁.center });
+    await ridingSearch(riding, { start: 地铁.center, end: 目的地.center });
+    await subwayTransferSearch(subwayTransfer, {
+      start: 地铁.center,
+      end: 目的地.center,
     });
-
-    riding.search(起始点.center, 地铁.center, (status: any, result: any) => {
-      console.log("layouwen riding result", result);
-    });
-
-    subwayTransfer.search(
-      地铁.center,
-      目的地.center,
-      (status: any, result: any) => {
-        console.log("layouwen subwayTransfer result", result);
-      }
-    );
   }
 
-  transfer.search(起始点.center, 目的地.center, (status: any, result: any) => {
-    console.log("layouwen transfer result", result);
+  await transferSearch(transfer, {
+    start: 起始点.center,
+    end: 目的地.center,
   });
 }
 
@@ -221,7 +219,7 @@ const 万科理想花地朗庭 = {
 
 const 中海浣花里 = {
   name: "中海浣花里",
-  center: [113.232172,23.082296],
+  center: [113.232172, 23.082296],
   run: ({ walking, riding, subwayTransfer, transfer }: any) => {
     const 起始点 = 中海浣花里;
     const 地铁 = 坑口地铁;
