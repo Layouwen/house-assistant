@@ -114,6 +114,11 @@ const 芳村地铁 = {
   center: [113.23587, 23.09857],
 };
 
+const 石围塘地铁 = {
+  name: "石围塘地铁",
+  center: [113.224847, 23.10377],
+};
+
 const 新世界天馥 = {
   name: "新世界天馥",
   center: [113.210261, 23.111539],
@@ -295,27 +300,66 @@ const 保利雅郡 = {
   },
 };
 
+const 广州无忧美家 = {
+  name: "广州无忧美家",
+  center: [113.313164, 23.096068],
+};
+
+const 名雕装饰股份 = {
+  name: "名雕装饰股份",
+  center: [
+113.431102, 23.103294],
+};
+
+const 星艺装饰整装馆天河店 = {
+  name: "星艺装饰整装馆天河店",
+  center: [113.320964, 23.14138],
+};
+
+const 诺艺装饰 = {
+  name: "诺艺装饰",
+  center: [113.302604, 23.064882],
+};
+
+const 名门大厦首层九艺装饰 = {
+  name: "名门大厦首层九艺装饰",
+  center: [113.31586, 23.119057],
+};
+
+const 轩怡家装番禺旗舰店 = {
+  name: "轩怡家装番禺旗舰店",
+  center: [113.319984, 23.033156],
+};
+
 const pois = [
-  西朗地铁,
+  // 西朗地铁,
   滘口地铁,
-  花地湾地铁,
-  鹤洞地铁,
-  坑口地铁,
-  芳村地铁,
+  石围塘地铁,
+  // 花地湾地铁,
+  // 鹤洞地铁,
+  // 坑口地铁,
+  // 芳村地铁,
 
-  南塘,
-  东方国际广场,
+  // 南塘,
+  // 东方国际广场,
 
-  新世界天馥,
-  保利锦上印,
-  诚汇新都,
-  广钢花城,
-  越秀天瀛,
-  保利和颂,
-  花语和岸,
-  保利雅郡,
-  中海浣花里,
-  万科理想花地朗庭,
+  // 新世界天馥,
+  // 保利锦上印,
+  // 诚汇新都,
+  // 广钢花城,
+  // 越秀天瀛,
+  // 保利和颂,
+  // 花语和岸,
+  // 保利雅郡,
+  // 中海浣花里,
+  // 万科理想花地朗庭,
+
+广州无忧美家,
+名雕装饰股份,
+星艺装饰整装馆天河店,
+诺艺装饰,
+名门大厦首层九艺装饰,
+轩怡家装番禺旗舰店,
 ];
 
 function App() {
@@ -435,7 +479,7 @@ function App() {
             });
 
             // 诚汇新都.run({ walking, riding, subwayTransfer, transfer, transferCenter });
-            新世界天馥.run({ walking, riding, subwayTransfer, transfer, transferCenter });
+            // 新世界天馥.run({ walking, riding, subwayTransfer, transfer, transferCenter });
             // 越秀天瀛.run({ walking, riding, subwayTransfer, transfer });
             // 广钢花城.run({ walking, riding, subwayTransfer, transfer });
             // 保利锦上印.run({ walking, riding, subwayTransfer, transfer });
@@ -445,8 +489,11 @@ function App() {
             // 花语和岸.run({ walking, riding, subwayTransfer, transfer });
             // 保利雅郡.run({ walking, riding, subwayTransfer, transfer });
 
-            return;
+            // return;
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            window.searchList = (name: string) => {
             const placeSearch = new AMap.PlaceSearch({
               pageSize: 20, //单页显示结果条数
               pageIndex: 1, //页码
@@ -454,11 +501,11 @@ function App() {
               citylimit: true, //是否强制限制在设置的城市内搜索
               map: map, //展现结果的地图实例
               panel: "my-panel", //参数值为你页面定义容器的 id 值<div id="my-panel"></div>，结果列表将在此容器中进行展示。
-              // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
-            });
-            placeSearch.search("白鹅潭万象城", (status: any, result: any) => {
-              console.log("layouwen place search status", status);
-              if (status === "error") {
+                // autoFitView: true, //是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围
+              });
+              placeSearch.search(name, (status: any, result: any) => {
+                console.log("layouwen place search status", status);
+                if (status === "error") {
                 console.log("layouwen place search error", result);
                 return;
               }
@@ -468,6 +515,7 @@ function App() {
                 result.poiList?.pois
               );
             }); //使用插件搜索关键字并查看结果
+            }
           }
         );
 
